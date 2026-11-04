@@ -1,0 +1,122 @@
+[
+  {
+    "id": "am62x-linux-edgeai-demo",
+    "title": "AM62x Edge AI Vision Demo",
+    "description": "Real-time object detection and classification on AM62x using TFLite runtime with GStreamer pipeline. Supports camera input and display output on Starter Kit EVM.",
+    "device_families": ["AM62x"],
+    "os": ["Linux"],
+    "categories": ["AI/ML", "Vision"],
+    "item_type": "Demo",
+    "toolchain": ["GCC", "Yocto"],
+    "github_url": "https://github.com/TexasInstruments/edgeai-gst-apps",
+    "recently_added": true
+  },
+  {
+    "id": "am64x-motor-control-sdk",
+    "title": "AM64x Motor Control SDK",
+    "description": "High-voltage 3-phase BLDC/PMSM motor drive reference using AM64x PRU-ICSSG. Achieves sub-microsecond real-time control loop with SIL2 safety readiness.",
+    "device_families": ["AM64x"],
+    "os": ["RTOS"],
+    "categories": ["Motor Control", "Industrial"],
+    "item_type": "Reference Design",
+    "toolchain": ["GCC", "TI CCS"],
+    "github_url": "https://github.com/TexasInstruments/motor-control-sdk",
+    "recently_added": false
+  },
+  {
+    "id": "am62x-android-hmi",
+    "title": "AM62x Android HMI Starter",
+    "description": "Android Automotive OS HMI starter application for AM62x. Demonstrates GPU-accelerated UI rendering, multi-display support, and IVI cluster integration.",
+    "device_families": ["AM62x"],
+    "os": ["Android"],
+    "categories": ["HMI", "Graphics"],
+    "item_type": "Application SW Pack",
+    "toolchain": ["GCC", "Yocto"],
+    "github_url": "https://github.com/TexasInstruments/processor-sdk-android",
+    "recently_added": false
+  },
+  {
+    "id": "am64x-industrial-protocols",
+    "title": "AM64x Industrial Protocol Gateway",
+    "description": "Multi-protocol industrial gateway using AM64x PRU-ICSSG. Supports EtherCAT, PROFINET, EtherNet/IP and Modbus with deterministic sub-100µs cycle time.",
+    "device_families": ["AM64x"],
+    "os": ["RTOS", "Linux"],
+    "categories": ["Industrial", "Networking"],
+    "item_type": "Reference Design",
+    "toolchain": ["GCC", "TI CCS"],
+    "github_url": "https://github.com/TexasInstruments/ind-comms-sdk",
+    "recently_added": false
+  },
+  {
+    "id": "am62ax-vision-analytics",
+    "title": "AM62Ax Vision Analytics Pipeline",
+    "description": "Multi-camera analytics pipeline on AM62Ax MMA accelerator. Runs YOLO-based detection at 30fps with semantic segmentation on a single 2W device.",
+    "device_families": ["AM62Ax"],
+    "os": ["Linux"],
+    "categories": ["AI/ML", "Vision"],
+    "item_type": "Demo",
+    "toolchain": ["GCC", "Yocto"],
+    "github_url": "https://github.com/TexasInstruments/edgeai-tidl-tools",
+    "recently_added": true
+  },
+  {
+    "id": "am62px-dual-display-cluster",
+    "title": "AM62Px Dual-Display Instrument Cluster",
+    "description": "Automotive dual-display cluster and IVI split-screen demo on AM62Px. Demonstrates DSS8 display sharing, GPU compositing, and CAN signal integration.",
+    "device_families": ["AM62Px"],
+    "os": ["Linux", "Android"],
+    "categories": ["HMI", "Graphics"],
+    "item_type": "Demo",
+    "toolchain": ["GCC", "Yocto"],
+    "github_url": "https://github.com/TexasInstruments/processor-sdk-linux",
+    "recently_added": true
+  },
+  {
+    "id": "am65x-tsnswitch-demo",
+    "title": "AM65x TSN Switch Demo",
+    "description": "IEEE 802.1Qbv Time-Sensitive Networking switch demo on AM65x ICSSG. Demonstrates scheduled traffic, preemption, and CBS with hardware timestamping.",
+    "device_families": ["AM65x"],
+    "os": ["Linux"],
+    "categories": ["Networking", "Industrial"],
+    "item_type": "Demo",
+    "toolchain": ["GCC", "Yocto"],
+    "github_url": "https://github.com/TexasInstruments/enet-tsn-stack",
+    "recently_added": false
+  },
+  {
+    "id": "am62x-security-ti-secure-boot",
+    "title": "AM62x Secure Boot & OTA Update",
+    "description": "End-to-end secure boot chain with code signing, OP-TEE secure enclave, and over-the-air update using hawkBit on AM62x SK-EVM.",
+    "device_families": ["AM62x"],
+    "os": ["Linux"],
+    "categories": ["Security"],
+    "item_type": "Application Note",
+    "toolchain": ["GCC", "Yocto"],
+    "github_url": "https://github.com/TexasInstruments/processor-sdk-linux",
+    "recently_added": false
+  },
+  {
+    "id": "am67a-dl-robotics",
+    "title": "AM67A Deep Learning Robotics",
+    "description": "ROS 2 robotics stack with deep-learning-based perception on AM67A. Demonstrates point cloud processing, LiDAR fusion, and autonomous navigation.",
+    "device_families": ["AM67"],
+    "os": ["Linux"],
+    "categories": ["AI/ML", "Vision"],
+    "item_type": "Reference Design",
+    "toolchain": ["GCC", "Yocto", "CMake"],
+    "github_url": "https://github.com/TexasInstruments/robotics-sdk",
+    "recently_added": true
+  },
+  {
+    "id": "am64x-functional-safety-demo",
+    "title": "AM64x Functional Safety IEC 62443",
+    "description": "Safety-capable diagnostic framework for AM64x targeting IEC 62443 / SIL2. Includes CPU, memory, and peripheral self-test libraries with FreeRTOS integration.",
+    "device_families": ["AM64x"],
+    "os": ["RTOS"],
+    "categories": ["Industrial", "Security"],
+    "item_type": "Application SW Pack",
+    "toolchain": ["GCC", "TI CCS"],
+    "github_url": "https://github.com/TexasInstruments/safety-checkers",
+    "recently_added": false
+  }
+]
