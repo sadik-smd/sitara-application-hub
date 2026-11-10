@@ -3,348 +3,183 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sitara Application Hub — Texas Instruments</title>
+  <title>Sitara Application Hub</title>
   <link rel="icon" href="assets/img/favicon.ico" />
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-
 <div id="app">
 
-  <!-- ═══════════════════════════════════════════════════════
-       HEADER
-  ═══════════════════════════════════════════════════════ -->
   <header>
-    <!-- Logo + brand -->
-    <a class="header-logo-wrap" href="#">
-      <img src="assets/img/ti_logo.png" alt="Texas Instruments" class="header-logo" />
-      <div class="header-divider"></div>
-      <div class="header-brand">
-        <span class="header-brand-main">Sitara Application Hub</span>
-        <span class="header-brand-sub">Texas Instruments</span>
-      </div>
-    </a>
-
-    <div class="header-spacer"></div>
-
-    <div class="header-nav">
-      <!-- Search -->
-      <div class="search-wrap">
-        <span class="search-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="2.2"
-               stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-          </svg>
-        </span>
-        <input
-          v-model="searchQuery"
-          type="search"
-          class="search-input"
-          placeholder="Search applications…"
-          aria-label="Search"
-        />
-      </div>
-
-      <!-- Dark / light toggle -->
-      <button class="theme-toggle" @click="toggleTheme" :title="isDark ? 'Switch to light mode' : 'Switch to dark mode'">
-        <!-- Moon (dark mode active) -->
-        <svg v-if="isDark" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-             viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
-        </svg>
-        <!-- Sun (light mode active) -->
-        <svg v-else xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-             viewBox="0 0 24 24" fill="none" stroke="currentColor"
-             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="5"/>
-          <line x1="12" y1="1" x2="12" y2="3"/>
-          <line x1="12" y1="21" x2="12" y2="23"/>
-          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-          <line x1="1" y1="12" x2="3" y2="12"/>
-          <line x1="21" y1="12" x2="23" y2="12"/>
-          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-        </svg>
-      </button>
+    <img src="assets/img/ti_logo.png" alt="TI" class="h-logo" />
+    <div class="h-sep"></div>
+    <span class="h-title">Sitara Application Hub</span>
+    <div class="h-gap"></div>
+    <div class="search-wrap">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+      <input v-model="searchQuery" type="search" class="search-input" placeholder="Search…" aria-label="Search" />
     </div>
+    <button class="theme-btn" @click="toggleTheme" :title="isDark ? 'Light mode' : 'Dark mode'">
+      <svg v-if="isDark" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/>
+      </svg>
+      <svg v-else width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
   </header>
 
-  <!-- ═══════════════════════════════════════════════════════
-       BODY LAYOUT
-  ═══════════════════════════════════════════════════════ -->
   <div class="layout">
 
-    <!-- ─────────────────────────────────────────────────────
-         SIDEBAR
-    ───────────────────────────────────────────────────── -->
     <aside class="sidebar">
-
-      <template v-for="group in FILTER_GROUPS" :key="group.key">
-        <div class="filter-group">
-          <button
-            class="filter-group-btn"
-            @click="toggleGroup(group.key)"
-            :aria-expanded="openGroups[group.key]"
-          >
-            {{ group.label }}
-            <svg class="chevron" :class="{ open: openGroups[group.key] }"
-                 xmlns="http://www.w3.org/2000/svg" width="13" height="13"
-                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                 stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
-          </button>
-
-          <div v-show="openGroups[group.key]" class="filter-group-body">
-            <label
-              v-for="option in group.options"
-              :key="option"
-              class="filter-option"
-            >
-              <input
-                type="checkbox"
-                :checked="isChecked(group.key, option)"
-                @change="toggleFilter(group.key, option)"
-              />
-              {{ option }}
-              <span class="filter-count">{{ countFor(group.key, option) }}</span>
-            </label>
-          </div>
+      <div v-for="group in FILTER_GROUPS" :key="group.key" class="filter-group">
+        <button class="fg-btn" @click="toggleGroup(group.key)" :aria-expanded="openGroups[group.key]">
+          {{ group.label }}
+          <svg class="chevron" :class="{ open: openGroups[group.key] }" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+        <div v-show="openGroups[group.key]" class="fg-body">
+          <label v-for="opt in group.options" :key="opt" class="f-opt">
+            <input type="checkbox" :checked="isChecked(group.key, opt)" @change="toggleFilter(group.key, opt)" />
+            {{ opt }}
+            <span class="f-count">{{ countFor(group.key, opt) }}</span>
+          </label>
         </div>
-      </template>
-
-      <button v-if="hasAnyFilter" class="clear-btn" @click="clearAll">
-        Clear All Properties
-      </button>
+      </div>
+      <button v-if="hasAnyFilter" class="clear-btn" @click="clearAll">Clear all</button>
     </aside>
 
-    <!-- ─────────────────────────────────────────────────────
-         MAIN
-    ───────────────────────────────────────────────────── -->
     <main class="main">
-
-      <!-- Toolbar -->
       <div class="toolbar">
-        <span class="result-count">
-          Total: <strong>{{ filteredApps.length }}</strong>
-        </span>
-        <div class="active-chips">
+        <span class="count">Total: <strong>{{ filteredApps.length }}</strong></span>
+        <div class="chips">
           <span v-for="chip in activeChips" :key="chip.key + chip.value" class="chip">
             {{ chip.value }}
-            <button class="chip-remove" @click="removeChip(chip.key, chip.value)" :aria-label="'Remove ' + chip.value">&#215;</button>
+            <button class="chip-x" @click="removeChip(chip.key, chip.value)">&#215;</button>
           </span>
         </div>
       </div>
 
-      <!-- Card grid -->
-      <div class="cards-grid">
-        <template v-if="filteredApps.length > 0">
-
+      <div class="grid">
+        <template v-if="filteredApps.length">
           <article
             v-for="app in filteredApps"
             :key="app.id"
-            class="app-card"
-            :class="{ selected: selectedApp && selectedApp.id === app.id }"
+            class="card"
+            :class="{ open: selectedApp && selectedApp.id === app.id }"
             @click="openModal(app)"
-            role="button"
-            :aria-label="'View details for ' + app.title"
             tabindex="0"
             @keydown.enter="openModal(app)"
           >
-            <!-- Image / placeholder area -->
-            <div class="card-image">
-              <div class="card-image-placeholder">
-                <!-- Circuit board SVG placeholder icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72"
-                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="2"/>
-                  <rect x="7" y="7" width="10" height="10" rx="1"/>
-                  <line x1="7" y1="2" x2="7" y2="4"/>
-                  <line x1="12" y1="2" x2="12" y2="4"/>
-                  <line x1="17" y1="2" x2="17" y2="4"/>
-                  <line x1="7" y1="20" x2="7" y2="22"/>
-                  <line x1="12" y1="20" x2="12" y2="22"/>
-                  <line x1="17" y1="20" x2="17" y2="22"/>
-                  <line x1="2" y1="7" x2="4" y2="7"/>
-                  <line x1="2" y1="12" x2="4" y2="12"/>
-                  <line x1="2" y1="17" x2="4" y2="17"/>
-                  <line x1="20" y1="7" x2="22" y2="7"/>
-                  <line x1="20" y1="12" x2="22" y2="12"/>
-                  <line x1="20" y1="17" x2="22" y2="17"/>
-                </svg>
-              </div>
-              <!-- Category tags overlaid on image -->
-              <div class="card-image-tags">
-                <span v-for="c in app.categories" :key="c" class="tag tag-category">{{ c }}</span>
+            <div class="card-img">
+              <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="2"/><rect x="7" y="7" width="10" height="10" rx="1"/>
+                <line x1="7" y1="2" x2="7" y2="4"/><line x1="12" y1="2" x2="12" y2="4"/><line x1="17" y1="2" x2="17" y2="4"/>
+                <line x1="7" y1="20" x2="7" y2="22"/><line x1="12" y1="20" x2="12" y2="22"/><line x1="17" y1="20" x2="17" y2="22"/>
+                <line x1="2" y1="7" x2="4" y2="7"/><line x1="2" y1="12" x2="4" y2="12"/><line x1="2" y1="17" x2="4" y2="17"/>
+                <line x1="20" y1="7" x2="22" y2="7"/><line x1="20" y1="12" x2="22" y2="12"/><line x1="20" y1="17" x2="22" y2="17"/>
+              </svg>
+              <div class="img-tags">
+                <span v-for="c in app.categories" :key="c" class="tag tag-cat">{{ c }}</span>
               </div>
             </div>
 
-            <!-- Card body -->
             <div class="card-body">
               <div class="card-title">{{ app.title }}</div>
-              <div class="card-subtitle">{{ app.device_families.join(', ') }}</div>
               <p class="card-desc">{{ app.description }}</p>
               <div class="card-tags">
                 <span v-if="app.recently_added" class="tag tag-new">New</span>
+                <span v-for="d in app.device_families" :key="d" class="tag tag-dev">{{ d }}</span>
                 <span v-for="o in app.os" :key="o" class="tag tag-os">{{ o }}</span>
-                <span v-for="d in app.device_families" :key="d" class="tag tag-device">{{ d }}</span>
               </div>
             </div>
 
-            <!-- TI red accent line + logo row -->
-            <div class="card-footer">
-              <div class="card-accent-line"></div>
-              <div class="card-logo-row">
-                <img src="assets/img/ti_logo.png" alt="TI" class="card-ti-logo" />
-                <div class="card-actions">
-                  <a
-                    :href="app.github_url"
-                    target="_blank"
-                    rel="noopener"
-                    class="btn-icon"
-                    @click.stop
-                    title="Visit on GitHub"
-                  >
-                    <!-- GitHub icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                    GitHub
-                  </a>
-                  <button
-                    class="btn-icon"
-                    :class="{ copied: copiedCardId === app.id }"
-                    @click="copyCardLink(app, $event)"
-                    :title="copiedCardId === app.id ? 'Copied!' : 'Copy link'"
-                  >
-                    <svg v-if="copiedCardId !== app.id" xmlns="http://www.w3.org/2000/svg" width="12" height="12"
-                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round">
-                      <rect x="9" y="9" width="13" height="13" rx="2"/>
-                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
-                    </svg>
-                    <svg v-else xmlns="http://www.w3.org/2000/svg" width="12" height="12"
-                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                         stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="20 6 9 17 4 12"/>
-                    </svg>
-                  </button>
-                </div>
+            <div class="card-foot">
+              <img src="assets/img/ti_logo.png" alt="TI" class="card-logo" />
+              <div class="card-acts">
+                <a :href="app.github_url" target="_blank" rel="noopener" class="ibtn" @click.stop>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                  GitHub
+                </a>
+                <button class="ibtn" :class="{ ok: copiedId === app.id }" @click="copyLink(app, $event)" title="Copy link">
+                  <svg v-if="copiedId !== app.id" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                  </svg>
+                  <svg v-else width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                </button>
               </div>
             </div>
           </article>
-
         </template>
 
-        <!-- Empty state -->
-        <div v-else class="empty-state">
-          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"
-               fill="none" stroke="currentColor" stroke-width="1.2">
+        <div v-else class="empty">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
-          <p>No applications match your current filters.</p>
+          <p>No results</p>
         </div>
-
       </div>
     </main>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════
-       DETAIL MODAL (click card to open)
-  ═══════════════════════════════════════════════════════ -->
-  <div
-    v-if="selectedApp"
-    class="modal-overlay"
-    @click="handleOverlayClick"
-    role="dialog"
-    :aria-label="selectedApp.title"
-    aria-modal="true"
-  >
+  <div v-if="selectedApp" class="overlay" @click="handleOverlayClick" role="dialog" :aria-label="selectedApp.title" aria-modal="true">
     <div class="modal">
-      <!-- Modal top action bar (matches NXP layout) -->
-      <div class="modal-header">
-        <a :href="selectedApp.github_url" target="_blank" rel="noopener" class="modal-action-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
-          </svg>
+      <div class="modal-bar">
+        <a :href="selectedApp.github_url" target="_blank" rel="noopener" class="ibtn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
           Visit on GitHub
         </a>
-        <button class="modal-action-btn" @click="copyModalLink" :class="{ copied: modalCopied }">
-          <svg v-if="!modalCopied" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
+        <button class="ibtn" :class="{ ok: modalCopied }" @click="copyModalLink">
+          <svg v-if="!modalCopied" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
             <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
           </svg>
-          <svg v-else xmlns="http://www.w3.org/2000/svg" width="14" height="14"
-               viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-               stroke-linecap="round" stroke-linejoin="round">
+          <svg v-else width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="20 6 9 17 4 12"/>
           </svg>
-          {{ modalCopied ? 'Copied!' : 'Share link' }}
+          {{ modalCopied ? 'Copied' : 'Share' }}
         </button>
-        <button class="modal-close" @click="closeModal" aria-label="Close">&#215;</button>
+        <button class="mclose" @click="closeModal" aria-label="Close">&#215;</button>
       </div>
-
-      <!-- Modal body -->
       <div class="modal-body">
-        <img src="assets/img/ti_logo.png" alt="Texas Instruments" class="modal-ti-logo" />
-
         <h2 class="modal-title">{{ selectedApp.title }}</h2>
         <p class="modal-desc">{{ selectedApp.description }}</p>
-
         <div class="modal-tags">
           <span v-if="selectedApp.recently_added" class="tag tag-new">New</span>
-          <span v-for="c in selectedApp.categories" :key="c" class="tag tag-category">{{ c }}</span>
-          <span v-for="d in selectedApp.device_families" :key="d" class="tag tag-device">{{ d }}</span>
+          <span v-for="c in selectedApp.categories" :key="c" class="tag tag-cat">{{ c }}</span>
+          <span v-for="d in selectedApp.device_families" :key="d" class="tag tag-dev">{{ d }}</span>
           <span v-for="o in selectedApp.os" :key="o" class="tag tag-os">{{ o }}</span>
         </div>
-
         <div class="modal-meta">
-          <div class="modal-meta-item">
-            <label>Device Family</label>
-            <span>{{ selectedApp.device_families.join(', ') }}</span>
-          </div>
-          <div class="modal-meta-item">
-            <label>Operating System</label>
-            <span>{{ selectedApp.os.join(', ') }}</span>
-          </div>
-          <div class="modal-meta-item">
-            <label>Item Type</label>
-            <span>{{ selectedApp.item_type }}</span>
-          </div>
-          <div class="modal-meta-item">
-            <label>Toolchain</label>
-            <span>{{ selectedApp.toolchain.join(', ') }}</span>
-          </div>
+          <div class="meta-item"><label>Device</label><span>{{ selectedApp.device_families.join(', ') }}</span></div>
+          <div class="meta-item"><label>OS</label><span>{{ selectedApp.os.join(', ') }}</span></div>
+          <div class="meta-item"><label>Type</label><span>{{ selectedApp.item_type }}</span></div>
+          <div class="meta-item"><label>Toolchain</label><span>{{ selectedApp.toolchain.join(', ') }}</span></div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════
-       FOOTER
-  ═══════════════════════════════════════════════════════ -->
   <footer>
     <span>&copy; 2024 Texas Instruments Incorporated.</span>
-    <span class="footer-sep">|</span>
+    <span class="fsep">|</span>
     <a href="https://www.ti.com/corp/docs/legal/privacy.shtml" target="_blank" rel="noopener">Privacy Policy</a>
-    <span class="footer-sep">|</span>
+    <span class="fsep">|</span>
     <a href="https://www.ti.com/corp/docs/legal/termsofuse.shtml" target="_blank" rel="noopener">Terms of Use</a>
-    <span class="footer-sep">|</span>
+    <span class="fsep">|</span>
     <a href="https://www.ti.com/corp/docs/legal/copyright.shtml" target="_blank" rel="noopener">Copyright</a>
-    <span class="footer-sep">|</span>
-    <a href="https://www.ti.com/general/docs/gotourl.tsp?url=https%3A%2F%2Fwww.ti.com%2Fcorp%2Fdocs%2Flegal%2Faccessibility.shtml" target="_blank" rel="noopener">Accessibility</a>
-    <span class="footer-right">Sitara Processors &amp; Microprocessors</span>
   </footer>
 
-</div><!-- /#app -->
-
-<!-- Vue.js 3 CDN -->
+</div>
 <script src="https://cdn.jsdelivr.net/npm/vue@3.4.21/dist/vue.global.prod.js"></script>
 <script src="assets/js/app.js"></script>
 </body>

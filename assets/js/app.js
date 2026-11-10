@@ -168,13 +168,13 @@ createApp({
     function isChecked(key, value) { return activeFilters[key].has(value); }
 
     // ── Copy ─────────────────────────────────────────────────
-    const copiedCardId = ref(null);
+    const copiedId = ref(null);
 
-    function copyCardLink(app, e) {
+    function copyLink(app, e) {
       e.stopPropagation();
       navigator.clipboard.writeText(app.github_url).then(() => {
-        copiedCardId.value = app.id;
-        setTimeout(() => { copiedCardId.value = null; }, 1500);
+        copiedId.value = app.id;
+        setTimeout(() => { copiedId.value = null; }, 1500);
       });
     }
 
@@ -208,8 +208,8 @@ createApp({
       openModal,
       closeModal,
       handleOverlayClick,
-      copiedCardId,
-      copyCardLink,
+      copiedId,
+      copyLink,
       copyModalLink,
     };
   },
